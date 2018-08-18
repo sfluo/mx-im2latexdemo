@@ -5,41 +5,56 @@
   <meta charset="UTF-8">
   <title>Crack your latex formula!</title>
 </head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script src="{{url_for('static', filename='jquery.jslatex.js')}}"></script>
 
 <script>
 var loadFile = function(event) {
 
 	var image = document.getElementById('output');
 	image.src = URL.createObjectURL(event.target.files[0]);
+
+	document.getElementById("crackimage").submit();
+	document.getElementById("latexstr").innerHTML = "loading ...";
+	document.getElementById("lateximg").innerHTML = "loading ...";
 };
 </script>
 
-
 <body>
 <header class="navbar">
-<form action="/uploads" method="post" enctype="multipart/form-data" >
+<h2> Convert Image to Latex: </h2>
+<form id='crackimage' action="/index" method="post" enctype="multipart/form-data" >
 	<span class="btn btn-default btn-file">
-        Browse <input type="file" name="image" id="imgInp" onchange="loadFile(event)">
-      </span>
+        Upload image file (PNG or PDF): <input type="file" name="image" id="imgInp" onchange="loadFile(event)">
+      </span> 
       <br>
-
  {% if filename %}
- 	<img id="output" src="{{ url_for('send_file', filename=filename) }}" height="80"/>
+ 	<img id="output" src="{{ url_for('send_file', filename=filename) }}" height="60"/>
 {% else %}
-	<img id="output" height="80"/>	
+	<img id="output" height="60"/>	
 {% endif %}
-
-<br>
-  <input type="submit" value="Crack" class="btn btn-primary" >
 </form>
-<br>
-
-
-<br>
+<h3>Cracked Latex: </h3>
+<div id='latexstr'>
 {% if latexstr %}
- 	<h2> {{ latexstr }}</h2>
+   {{ latexstr }}
 {% endif %}
+</div>
 
+<br><br>
+
+<hr> 
+<h4>Check whether it is correct by rendering it back to latex image:</h4>
+
+<script>
+$(function () {
+    $(".latex").latex();
+});
+</script>
+
+<div id='lateximg' class="latex">
+    {{ latexstr }}
+</div>
 
 
 </body>
