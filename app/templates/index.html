@@ -26,14 +26,14 @@ var loadFile = function(event) {
 <form id='crackimage' action="/index" method="post" enctype="multipart/form-data" >
 	<span class="btn btn-default btn-file">
         Upload image file (PNG or PDF): <input type="file" name="image" id="imgInp" onchange="loadFile(event)">
-      </span> 
-      <br>
- {% if filename %}
- 	<img id="output" src="{{ url_for('send_file', filename=filename) }}" height="60"/>
-{% else %}
-	<img id="output" height="60"/>	
-{% endif %}
+      </span>   
 </form>
+<br>
+ {% if filename %}
+  <img id="output" src="{{ url_for('send_file', filename=filename) }}" height="60"/>
+{% else %}
+  <img id="output" height="60"/>  
+{% endif %}
 <h3>Cracked Latex: </h3>
 <div id='latexstr'>
 {% if latexstr %}

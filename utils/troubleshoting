@@ -1,0 +1,23 @@
+
+https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04
+
+trouble shotting
+
+
+1. 502 Bad Gateway: 
+
+	NGINX log : /var/log/nginx/error.log
+		111 connection refused.
+
+==> uWSGI is not working 
+
+2. test it in .env
+	
+	uwsgi --protocol=http
+
+104 reset by peer
+http://flask.pocoo.org/snippets/47/
+
+
+
+https://uwsgi-docs.readthedocs.io/en/latest/Fastrouter.html#post-buffering-mode-uwsgi-2-0-9
