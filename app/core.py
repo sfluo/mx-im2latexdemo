@@ -1,8 +1,4 @@
 
-from app import app
-import os
-
-from flask import render_template, request, send_from_directory
 from werkzeug.utils import secure_filename
 
 from model.utils.image import greyscale, crop_image, pad_image, \
@@ -14,10 +10,15 @@ import PIL
 from PIL import Image
 
 from loader import model 
+import os
 
 UPLOAD_FOLDER = os.path.dirname('/tmp/')
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+from flask import Flask
+from flask import render_template, request, send_from_directory
+
+app = Flask(__name__)
+	
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -27,7 +28,7 @@ def index():
 	if request.method == 'POST':
 	    file = request.files['image']
 	    filename = secure_filename(file.filename)
-	    savedpath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+	    savedpath = os.path.join(UPLOAD_FOLDER, filename)
 	    file.save(savedpath)
 	    print("New uploaded file: [%s]" % savedpath)
 
@@ -74,5 +75,5 @@ def index():
 
 @app.route('/saved/<filename>')
 def send_file(filename):
-	return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+	return send_from_directory(UPLOAD_FOLDER, filename)
 

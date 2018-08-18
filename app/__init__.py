@@ -1,7 +1,3 @@
 
-from flask import Flask
-
-app = Flask(__name__)
-
-from app import core
+__version__ = "1.0"
 
